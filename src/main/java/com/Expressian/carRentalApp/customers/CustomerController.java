@@ -3,9 +3,11 @@ package com.Expressian.carRentalApp.customers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -18,15 +20,20 @@ public class CustomerController {
     private AtomicLong custIdCounter = new AtomicLong();
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer newCustomer){
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer newCustomer){
         Long id = custIdCounter.incrementAndGet();
         newCustomer.setId(id);
-        return repository.save(newCustomer);
+        return new ResponseEntity<>(repository.save(newCustomer), HttpStatus.CREATED);
     }
 
     @GetMapping
     public List<Customer> getAllCustomers(){
         return repository.findAll();
+    }
+
+    @GetMapping("/name/{name}")
+    public List<Customer> getAllByName(@PathVariable String name){
+        return repository.findAllByName(name);
     }
 
     @GetMapping("/{id}")
