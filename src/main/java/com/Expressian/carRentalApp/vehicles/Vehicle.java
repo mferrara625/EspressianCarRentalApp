@@ -1,9 +1,9 @@
 package com.Expressian.carRentalApp.vehicles;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.Expressian.carRentalApp.stores.Store;
+
+import javax.persistence.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
@@ -15,6 +15,9 @@ public class Vehicle {
     private String make;
     private String model;
     private Integer price;
+    @ManyToOne
+    @JoinColumn(name = "developer_id", referencedColumnName = "id")
+    private Store store;
 
 
     public Vehicle(){}
