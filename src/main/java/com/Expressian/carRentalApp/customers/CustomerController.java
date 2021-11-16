@@ -10,17 +10,18 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
     CustomerRepository repository;
-    private AtomicLong custIdCounter = new AtomicLong();
+    private AtomicLong customerIdCounter = new AtomicLong();
 
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer newCustomer){
-        Long id = custIdCounter.incrementAndGet();
+        Long id = customerIdCounter.incrementAndGet();
         newCustomer.setId(id);
         return new ResponseEntity<>(repository.save(newCustomer), HttpStatus.CREATED);
     }
@@ -30,9 +31,9 @@ public class CustomerController {
         return repository.findAll();
     }
 
-    @GetMapping("/name/{name}")
-    public List<Customer> getAllByName(@PathVariable String name){
-        return repository.findAllByName(name);
+    @GetMapping("/name/{lastName}")
+    public List<Customer> getAllByLastName(@PathVariable String lastName){
+        return repository.findAllBylastName(lastName);
     }
 
     @GetMapping("/{id}")
@@ -43,12 +44,13 @@ public class CustomerController {
     @PutMapping("/{id}")
     public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer update){
         Customer customer = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if(update.getName() != null)
-            customer.setName(update.getName());
+        if(update.getFirstName() != null)
+            customer.setFirstName(update.getFirstName());
+        if(update.getLastName() != null)
+            customer.setLastName(update.getLastName());
         if(update.getEmail() != null)
             customer.setEmail(update.getEmail());
-        if(update.getCar() != null)
-            customer.setCar(update.getCar());
+
 
         return repository.save(customer);
 
@@ -56,7 +58,7 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     public String deleteCustomer(@PathVariable Long id){
-        String result = repository.getById(id).getName() + " was deleted from the system.";
+        String result = repository.getById(id).getFirstName() + " was deleted from the system.";
         repository.deleteById(id);
         return result;
     }

@@ -1,9 +1,11 @@
 package com.Expressian.carRentalApp.stores;
 
+import com.Expressian.carRentalApp.customers.Customer;
 import com.Expressian.carRentalApp.vehicles.Vehicle;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Store {
@@ -16,6 +18,14 @@ public class Store {
     @OneToMany
     @JoinColumn(name = "developer_id", referencedColumnName = "id")
     List<Vehicle> vehicleList;
+
+    @ManyToMany
+    @JoinTable(
+        name = "store_customer",
+        joinColumns = @JoinColumn(name = "store_id"),
+        inverseJoinColumns = @JoinColumn(name = "customer_id")
+    )
+    private Set<Customer> customers;
 
     public Store(){
 

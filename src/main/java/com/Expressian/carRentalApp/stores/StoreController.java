@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.concurrent.atomic.AtomicLong;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/stores")
 public class StoreController {
@@ -17,6 +18,13 @@ public class StoreController {
 
     @Autowired
     private StoreRepository repository;
+
+    @PostMapping
+    public Store createStore(@RequestBody Store newStore){
+        Long id = storeIDCounter.incrementAndGet();
+        newStore.setId(id);
+        return repository.save(newStore);
+    }
 
     @GetMapping
     public Iterable<Store> getAllStores(){
@@ -28,11 +36,15 @@ public class StoreController {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
-    public Store createStore(@RequestBody Store newStore){
-        Long id = storeIDCounter.incrementAndGet();
-        newStore.setId(id);
-        return repository.save(newStore);
+    @PutMapping("/{id}")
+    public Store updateStore(@PathVariable Long id, @RequestBody Store update){
+        Store store = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if(update.getName()!= null)
+            store.setName(update.getName());
+        if(update.getLocation() != null)
+            store.setLocation(update.getLocation());
+
+        return repository.save(store);
     }
 
 }

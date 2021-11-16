@@ -1,8 +1,9 @@
 package com.Expressian.carRentalApp.customers;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.Expressian.carRentalApp.stores.Store;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Customer {
@@ -10,30 +11,33 @@ public class Customer {
     @Id
     @GeneratedValue
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String car;
+
+    @ManyToMany
+    @JoinTable(
+            name = "store_customer",
+            joinColumns = @JoinColumn(name = "store_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id")
+    )
+    private Set<Store> stores;
 
     public Customer(){}
 
-    public Customer(String name, String email, String car){
-        this.name = name;
+    public Customer(String firstName, String lastName, String email){
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.car = car;
     }
 
-    public Customer(Long id, String name, String email, String car){
+    public Customer(Long id, String firstName, String lastName, String email){
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.car = car;
     }
 
-    public Customer(Long id, String name, String email){
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
 
     public Long getId() {
         return id;
@@ -43,12 +47,20 @@ public class Customer {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -59,21 +71,14 @@ public class Customer {
         this.email = email;
     }
 
-    public String getCar() {
-        return car;
-    }
-
-    public void setCar(String car) {
-        this.car = car;
-    }
 
     @Override
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", car='" + car + '\'' +
                 '}';
     }
 }

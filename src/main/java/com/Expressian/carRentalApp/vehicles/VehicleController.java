@@ -8,11 +8,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/vehicles")
 public class VehicleController {
     @Autowired
     VehicleRepository repository;
+
 
     private final AtomicLong idCount = new AtomicLong();
 
