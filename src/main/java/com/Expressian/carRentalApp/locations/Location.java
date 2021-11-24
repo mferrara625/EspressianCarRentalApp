@@ -1,29 +1,32 @@
 package com.Expressian.carRentalApp.locations;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import com.Expressian.carRentalApp.vehicles.Vehicle;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Location {
 
     @Id
     @GeneratedValue
     private Long id;
     private String namedID;
+    @OneToOne(mappedBy = "location")
+    private Vehicle vehicle;
 
     public Location(){
 
     }
 
-    public Location(String namedID){
+    public Location(String namedID, Vehicle vehicle) {
         this.namedID = namedID;
-    }
-
-    public Location(Long id, String namedID){
-        this.id = id;
-        this.namedID = namedID;
+        this.vehicle = vehicle;
     }
 
     public Long getId() {
@@ -40,5 +43,13 @@ public class Location {
 
     public void setNamedID(String namedID) {
         this.namedID = namedID;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 }

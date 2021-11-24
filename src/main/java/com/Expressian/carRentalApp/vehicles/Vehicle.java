@@ -4,12 +4,18 @@ package com.Expressian.carRentalApp.vehicles;
 import com.Expressian.carRentalApp.locations.Location;
 import com.Expressian.carRentalApp.rentals.Rental;
 import com.Expressian.carRentalApp.stores.Store;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Vehicle {
 
     @Id
@@ -27,6 +33,7 @@ public class Vehicle {
     private Set<Rental> rentals;
 
     @OneToOne
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
 

@@ -5,8 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.concurrent.atomic.AtomicLong;
 
 @CrossOrigin
@@ -41,8 +39,8 @@ public class StoreController {
         Store store = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         if(update.getName()!= null)
             store.setName(update.getName());
-        if(update.getLocation() != null)
-            store.setLocation(update.getLocation());
+        if(update.getStoreLocation() != null)
+            store.setStoreLocation(update.getStoreLocation());
 
         return repository.save(store);
     }

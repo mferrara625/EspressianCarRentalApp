@@ -69,8 +69,10 @@ public class VehicleController {
             vehicleRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)).setModel(updatedVehicle.getModel());
         if(updatedVehicle.getPrice() != null)
             vehicleRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)).setPrice(updatedVehicle.getPrice());
+        if(updatedVehicle.getStore() != null)
+            vehicleRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)).setStore(updatedVehicle.getStore());
         if(updatedVehicle.getLocation() != null)
-            vehicleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            vehicleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)).setLocation(updatedVehicle.getLocation());
 
         return vehicleRepository.save(vehicleRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }

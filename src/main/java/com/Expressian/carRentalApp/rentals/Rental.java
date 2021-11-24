@@ -3,10 +3,16 @@ package com.Expressian.carRentalApp.rentals;
 
 import com.Expressian.carRentalApp.customers.Customer;
 import com.Expressian.carRentalApp.vehicles.Vehicle;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Rental {
 
     @Id

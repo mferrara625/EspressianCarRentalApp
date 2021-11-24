@@ -2,19 +2,25 @@ package com.Expressian.carRentalApp.stores;
 
 import com.Expressian.carRentalApp.customers.Customer;
 import com.Expressian.carRentalApp.vehicles.Vehicle;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Store {
 
     @Id
     @GeneratedValue
     private Long id;
     private String name;
-    private String location;
+    private String storeLocation;
     @OneToMany
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
     List<Vehicle> vehicleList;
@@ -31,15 +37,15 @@ public class Store {
 
     }
 
-    public Store(String name, String location) {
+    public Store(String name, String storeLocation) {
         this.name = name;
-        this.location = location;
+        this.storeLocation = storeLocation;
     }
 
-    public Store(Long id, String name, String location) {
+    public Store(Long id, String name, String storeLocation) {
         this.id = id;
         this.name = name;
-        this.location = location;
+        this.storeLocation = storeLocation;
     }
 
     public Long getId() {
@@ -58,11 +64,11 @@ public class Store {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getStoreLocation() {
+        return storeLocation;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setStoreLocation(String storeLocation) {
+        this.storeLocation = storeLocation;
     }
 }

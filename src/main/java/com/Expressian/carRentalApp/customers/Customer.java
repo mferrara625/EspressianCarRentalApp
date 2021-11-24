@@ -2,11 +2,17 @@ package com.Expressian.carRentalApp.customers;
 
 import com.Expressian.carRentalApp.rentals.Rental;
 import com.Expressian.carRentalApp.stores.Store;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 public class Customer {
 
     @Id
