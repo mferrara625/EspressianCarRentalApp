@@ -1,5 +1,6 @@
 package com.Expressian.carRentalApp.customers;
 
+import com.Expressian.carRentalApp.rentals.Rental;
 import com.Expressian.carRentalApp.stores.Store;
 
 import javax.persistence.*;
@@ -22,6 +23,10 @@ public class Customer {
             inverseJoinColumns = @JoinColumn(name = "customer_id")
     )
     private Set<Store> stores;
+
+    @OneToMany
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Set<Rental> rentals;
 
     public Customer(){}
 
@@ -71,14 +76,20 @@ public class Customer {
         this.email = email;
     }
 
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+    public Set<Store> getStores() {
+        return stores;
     }
+
+    public void setStores(Set<Store> stores) {
+        this.stores = stores;
+    }
+
+    public Set<Rental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(Set<Rental> rentals) {
+        this.rentals = rentals;
+    }
+
 }

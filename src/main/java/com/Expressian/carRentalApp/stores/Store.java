@@ -16,7 +16,7 @@ public class Store {
     private String name;
     private String location;
     @OneToMany
-    @JoinColumn(name = "developer_id", referencedColumnName = "id")
+    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
     List<Vehicle> vehicleList;
 
     @ManyToMany

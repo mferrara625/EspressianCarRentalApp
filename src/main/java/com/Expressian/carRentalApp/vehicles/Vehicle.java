@@ -2,9 +2,11 @@ package com.Expressian.carRentalApp.vehicles;
 
 
 import com.Expressian.carRentalApp.locations.Location;
+import com.Expressian.carRentalApp.rentals.Rental;
 import com.Expressian.carRentalApp.stores.Store;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
@@ -17,8 +19,12 @@ public class Vehicle {
     private String model;
     private Integer price;
     @ManyToOne
-    @JoinColumn(name = "developer_id", referencedColumnName = "id")
+    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
     private Store store;
+
+    @OneToMany
+    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
+    private Set<Rental> rentals;
 
     @OneToOne
     private Location location;
@@ -83,16 +89,12 @@ public class Vehicle {
         this.location = location;
     }
 
-
-    @Override
-    public String toString() {
-        return "Vehicle{" +
-                "id=" + id +
-                ", make='" + make + '\'' +
-                ", model='" + model + '\'' +
-                ", price=" + price +
-                ", store=" + store +
-                ", location=" + location +
-                '}';
+    public Set<Rental> getRentals() {
+        return rentals;
     }
+
+    public void setRentals(Set<Rental> rentals) {
+        this.rentals = rentals;
+    }
+
 }
